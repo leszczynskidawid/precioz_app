@@ -1,41 +1,24 @@
-import { dividerClasses, TextField } from "@mui/material";
-import { getThemeProps } from "@mui/system";
+import { TextField } from "@mui/material";
 
-import {
-  Controller,
+import { Controller } from "react-hook-form";
 
-} from "react-hook-form";
-
-function InputForm({ name, label,  variant, size, error,control}) {
- 
-  console.log(error)
-  console.log(error[name])
- 
-
-
+function InputForm({ name, label, variant, size, error, control }) {
   return (
     <>
       <Controller
-      control={control}
+        control={control}
         name={name}
-        render={({field}) => (
+        render={({ field }) => (
           <TextField
-          {...field}
+            {...field}
             variant={variant}
             label={label}
             size={size}
             helperText={error[name]?.message}
             error={error[name]?.message}
-         
-            
-         
-      
-            
           />
         )}
-       
       />
-
     </>
   );
 }
