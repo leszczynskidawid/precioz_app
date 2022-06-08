@@ -1,36 +1,47 @@
-import { Controller, useForm } from "react-hook-form";
-import { Checkbox, TextField } from "@mui/material";
-import InputForm from "components/atoms/InputForm";
-import { useState } from "react";
-import MyButton, { Buttons, DeleteButton } from "components/atoms/MyButton";
+import { useForm } from "react-hook-form";
+import MyButton from "components/atoms/MyButton";
 import CheckBoxForm from "components/atoms/CheckBoxForm";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import InputForm from "components/atoms/InputForm";
+
+const schema = yup
+  .object({
+    name: yup.string().required("name").trim(),
+    lastname: yup.string().required("lastname").trim(),
+  })
+  .required();
 
 function VirtualComponentsDisigned() {
   const {
-    register,
+    control,
     handleSubmit,
-    
     formState: { errors },
-  } = useForm({ defaultValeus: { name: "" } });
-
+  } = useForm({
+    defaultValeus: { name: "" },
+    resolver: yupResolver(schema),
+  });
 
   const onSubmit = data => console.log(data);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} style={{ padding: "50px" }}>
-      <TextField
+      <InputForm
         name="name"
         label="name"
         variant="outlined"
         size="small"
-        {...register("name", { required: true })}
-        error={Boolean(errors.name?.type)}
-        helperText={errors.name?.type}
+        error={errors}
+        control={control}
       />
-{/* buttons */}
-<h1>buttons</h1>
+
+      {/* buttons */}
+      <h2>buttons</h2>
       <MyButton type="submit">Submit</MyButton>
 
+      {/* checkbox */}
+      <h2>checkbox</h2>
+      <CheckBoxForm label="checkbox" />
     </form>
   );
 }
