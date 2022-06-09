@@ -1,14 +1,24 @@
 import { useForm } from "react-hook-form";
-import MyButton from "components/atoms/MyButton";
-import CheckBoxForm from "components/atoms/CheckBoxForm";
+import MyButton from "components/atoms/Buttons/ButtonForm";
+import CheckBoxForm from "components/atoms/CheckBoxs/CheckBoxForm";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import InputForm from "components/atoms/InputForm";
+import InputForm from "components/atoms/Inputs/InputForm";
+import ButtonForm from "components/atoms/Buttons/ButtonForm";
+import { red } from "@mui/material/colors";
+
+const items = [
+  {  value: "", label: "pusta" },
+  {  value: 121, label: "121" },
+  {  value: 32, label: "32" },
+  {  value: 42, label: "42" },
+];
 
 const schema = yup
   .object({
     name: yup.string().required("name").trim(),
-    lastname: yup.string().required("lastname").trim(),
+  
+
   })
   .required();
 
@@ -18,11 +28,12 @@ function VirtualComponentsDisigned() {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    defaultValeus: { name: "" },
+    defaultValeus: { name: "asd" , select:"dasdasd"},
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = data => console.log(data);
+  const onSubmit = data =>     alert(JSON.stringify(data));;
+  console.log(items)
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} style={{ padding: "50px" }}>
@@ -37,11 +48,12 @@ function VirtualComponentsDisigned() {
 
       {/* buttons */}
       <h2>buttons</h2>
-      <MyButton type="submit">Submit</MyButton>
+      <ButtonForm>button</ButtonForm>
 
-      {/* checkbox */}
-      <h2>checkbox</h2>
-      <CheckBoxForm label="checkbox" />
+      <h2>Select</h2>
+     
+
+      
     </form>
   );
 }
