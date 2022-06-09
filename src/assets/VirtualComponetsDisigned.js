@@ -48,12 +48,17 @@ function VirtualComponentsDisigned() {
 
       {/* buttons */}
       <h2>buttons</h2>
-      <ButtonForm>button</ButtonForm>
+      <ButtonForm type="submit">button</ButtonForm>
 
       <h2>Select</h2>
-     
+      <SelectInputForm control={control} name="select" items={items} />
 
-      
+
+      <h2>checkbox</h2>
+    <CheckBoxForm control={control} name="askljh" label="alkshd"></CheckBoxForm>
+  
+  
+
     </form>
   );
 }

@@ -3,7 +3,10 @@ import { TextField } from "@mui/material";
 import { Controller } from "react-hook-form";
 
 function InputForm({ name, label, variant, size, error, control }) {
+
+
   return (
+    
     <>
       <Controller
         control={control}
