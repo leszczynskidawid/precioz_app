@@ -1,24 +1,21 @@
 import { useForm } from "react-hook-form";
-import MyButton from "components/atoms/Buttons/ButtonForm";
-import CheckBoxForm from "components/atoms/CheckBoxs/CheckBoxForm";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import InputForm from "components/atoms/Inputs/InputForm";
 import ButtonForm from "components/atoms/Buttons/ButtonForm";
-import { red } from "@mui/material/colors";
-
+import SelectInputForm from "components/atoms/SelectInputs/SelectInputForm";
+import CheckBoxForm from "components/atoms/CheckBoxs/CheckBoxForm";
 const items = [
-  {  value: "", label: "pusta" },
-  {  value: 121, label: "121" },
-  {  value: 32, label: "32" },
-  {  value: 42, label: "42" },
+  { value: 121, label: "121" },
+  { value: 32, label: "32" },
+  { value: 42, label: "42" },
 ];
 
 const schema = yup
   .object({
-    name: yup.string().required("name").trim(),
-  
-
+    firstName: yup.string().required("wymagany").trim(),
+    select: yup.string().required("wymagany").trim(),
+    checkbox:  yup.string().required("wymagany").trim(),
   })
   .required();
 
@@ -28,17 +25,15 @@ function VirtualComponentsDisigned() {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    defaultValeus: { name: "asd" , select:"dasdasd"},
+    defaultValeus: { firstName: "asd" },
     resolver: yupResolver(schema),
   });
-
-  const onSubmit = data =>     alert(JSON.stringify(data));;
-  console.log(items)
-
+  const onSubmit = data => alert(JSON.stringify(data));
+  console.log(errors)
   return (
     <form onSubmit={handleSubmit(onSubmit)} style={{ padding: "50px" }}>
       <InputForm
-        name="name"
+        name="firstName"
         label="name"
         variant="outlined"
         size="small"
@@ -51,14 +46,20 @@ function VirtualComponentsDisigned() {
       <ButtonForm type="submit">button</ButtonForm>
 
       <h2>Select</h2>
-      <SelectInputForm control={control} name="select" items={items} />
-
+      <SelectInputForm
+        control={control}
+        name="select"
+        items={items}
+        error={errors}
+      />
 
       <h2>checkbox</h2>
-    <CheckBoxForm control={control} name="askljh" label="alkshd"></CheckBoxForm>
-  
-  
-
+      <CheckBoxForm
+        control={control}
+        name="checkbox"
+        label="alkshd"
+        error={errors}
+      ></CheckBoxForm>
     </form>
   );
 }
