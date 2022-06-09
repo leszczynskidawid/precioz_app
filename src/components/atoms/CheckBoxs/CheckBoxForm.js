@@ -1,12 +1,26 @@
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import { Checkbox } from "@mui/material";
+import { Checkbox, FormControl } from "@mui/material";
+import { Controller } from "react-hook-form";
+import { FormHelperText } from "@mui/material";
 
-function CheckBoxForm({ ...props }) {
+function CheckBoxForm({ control, name, label, error }) {
   return (
-    <FormGroup>
-      <FormControlLabel control={<Checkbox defaultChecked />} {...props} />
-    </FormGroup>
+    <Controller
+      control={control}
+      name={name}
+      render={({ field }) => (
+        <FormControl error={error[name]?.message}>
+          <FormGroup>
+            <FormControlLabel
+              control={<Checkbox {...field} />}
+              label={label}
+            ></FormControlLabel>
+            {error && <FormHelperText>{error[name]?.message}</FormHelperText>}
+          </FormGroup>
+        </FormControl>
+      )}
+    />
   );
 }
 
