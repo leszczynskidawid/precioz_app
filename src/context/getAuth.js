@@ -12,6 +12,8 @@ const authContext = createContext(null);
 function ProviderAuthContext({ children }) {
 
   const [token, setToken] = useState(null);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [alertText, setAlertText] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -26,10 +28,23 @@ function ProviderAuthContext({ children }) {
     setToken(null);
   };
 
+  const toggleAlert = async (text) => {
+    setIsAlertOpen(true)
+    setAlertText(text)
+    setTimeout(() => {
+    setIsAlertOpen(false)
+    setAlertText('')
+   }, 5000)
+
+  };
+
   const value = {
     login,
     logout,
     token,
+    alertText,
+    isAlertOpen,
+    toggleAlert,
   };
 
   return <authContext.Provider value={value}>{children}</authContext.Provider>;
