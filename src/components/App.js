@@ -11,23 +11,24 @@ import Admin from "assets/HelperWorkerFolderWithRoutesComponent/Admin";
 import { RouterPathTypes } from "constants/RouterPathTypes";
 import { useRequest } from "hooks/useRequest";
 import { Alert } from "components/atoms/Alert";
+import { ApiClientMethodTypes } from "constants/ApiClientMehodTypes";
+
 function App() {
   const [users, setUsers] = useState([]);
-  const {getRequest} = useRequest();
+  const { callApiRequest } = useRequest();
+
   useEffect(() => {
     (async function getUsers() {
-      const res = await getRequest();
-      console.log(res)
-      if(res) {
-        setUsers(res.results)
+      const res = await callApiRequest(ApiClientMethodTypes.get);
+
+      if (res) {
+        setUsers(res.results);
       }
     })();
-  }, [])
-
+  }, []);
 
   return (
     <div className="App">
-      
       <Navigation />
 
       <Routes>
@@ -36,7 +37,10 @@ function App() {
           index
           element={<VirtualComponentsDisigned />}
         />
-        <Route path={RouterPathTypes.home} element={<VirtualComponentsDisigned />} />
+        <Route
+          path={RouterPathTypes.home}
+          element={<VirtualComponentsDisigned />}
+        />
         <Route element={<ProtectedRoute />}>
           <Route path={RouterPathTypes.dashboard} element={<Dashboard />} />
           <Route path={RouterPathTypes.admin} element={<Admin />} />
@@ -44,11 +48,11 @@ function App() {
         <Route path={RouterPathTypes.noMatch} element={<NoMatch />} />
       </Routes>
       <div>
-        {users?.map(user => <div key={user}>
-          {user.email}
-          </div>)}
+        {users?.map(user => (
+          <div key={user}>{user.email}</div>
+        ))}
       </div>
-      <Alert  />
+      <Alert />
     </div>
   );
 }
@@ -71,14 +75,11 @@ const Navigation = () => {
       <NavLink to={RouterPathTypes.admin}>Admin</NavLink>
 
       {token ? (
-        <ButtonForm  onClick={() => logout()}>
-          Logout
-        </ButtonForm>
+        <ButtonForm onClick={() => logout()}>Logout</ButtonForm>
       ) : (
-        <ButtonForm  onClick={() => login()}>
-          Login
-        </ButtonForm>
+        <ButtonForm onClick={() => login()}>Login</ButtonForm>
       )}
     </nav>
   );
 };
+

@@ -1,39 +1,40 @@
-import {apiClient} from 'helpers/apiClient'
-import {useApiClientExceptionHandler} from 'hooks/useApiClientExceptionHandler'
+import { ApiClientMethodTypes } from "constants/ApiClientMehodTypes";
+import { apiClient } from "helpers/apiClient";
+import { useApiClientExceptionHandler } from "hooks/useApiClientExceptionHandler";
 
 export const useRequest = () => {
-    const { handleApiClientException } = useApiClientExceptionHandler();
+  const { handleApiClientException } = useApiClientExceptionHandler();
 
-    const getRequest = async (path) => {     
-        try {
-            const response = await apiClient.get('', {timeout: 10000});
-    
-        if(response) {
-            return response.data;
-        } 
-        } catch(e) {
-console.log(e)
-           return handleApiClientException(e)
-        }
-    
+  const callApiRequest = async (method, path, config, body) => {
+    try {
+      let response = null;
+
+      if (
+        method === ApiClientMethodTypes.get ||
+        method === ApiClientMethodTypes.delete
+      ) {
+        response = await apiClient[method](
+          path,
+          config !== "undefind" ? config : {}
+        );
+      } else if (
+        method === ApiClientMethodTypes.post ||
+        method === ApiClientMethodTypes.put ||
+        method === ApiClientMethodTypes.patch
+      ) {
+        response = await apiClient[method](
+          path,
+          body,
+          config !== "undefind" ? config : {}
+        );
+      }
+      if (response) {
+        return response.data;
+      }
+    } catch (error) {
+      return handleApiClientException(error);
     }
-      // Create one generic function with all methods
+  };
 
-
-// const postRequest = async (path, body) => {     
-// try {
-//     const response = await apiClient.post('', body, {timeout: 10000,});
-
-// if(response) {
-//     return response.data;
-// } else {
-//     handleApiClientException(response )
-// }
-// } catch(e) {
-//    handleApiClientException(e)
-// }
-
-// }
-    return {getRequest}
-}
-
+  return { callApiRequest };
+};
