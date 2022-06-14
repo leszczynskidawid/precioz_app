@@ -1,2 +1,1 @@
-export const ApiEndpointTypes = {
-}
+export const ApiEndpointTypes = {};

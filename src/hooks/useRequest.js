@@ -3,11 +3,18 @@ import { apiClient } from "helpers/apiClient";
 import { useApiClientExceptionHandler } from "hooks/useApiClientExceptionHandler";
 
 export const useRequest = () => {
-  const { handleApiClientException } = useApiClientExceptionHandler();
+  const { handleApiClientException } =
+    useApiClientExceptionHandler();
 
-  const callApiRequest = async (method, path, config, body) => {
+  const callApiRequest = async (
+    method,
+    path,
+    config,
+    body,
+  ) => {
     try {
       let response = null;
+      console.log("askjndlajhdalsjd");
 
       if (
         method === ApiClientMethodTypes.get ||
@@ -15,7 +22,7 @@ export const useRequest = () => {
       ) {
         response = await apiClient[method](
           path,
-          config !== "undefind" ? config : {}
+          config !== "undefind" ? config : {},
         );
       } else if (
         method === ApiClientMethodTypes.post ||
@@ -25,7 +32,7 @@ export const useRequest = () => {
         response = await apiClient[method](
           path,
           body,
-          config !== "undefind" ? config : {}
+          config !== "undefind" ? config : {},
         );
       }
       if (response) {
