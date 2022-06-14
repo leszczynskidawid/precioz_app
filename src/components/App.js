@@ -30,7 +30,7 @@ function App() {
   return (
     <div className="App">
       <Navigation />
-
+      
       <Routes>
         <Route
           path={RouterPathTypes.home}
