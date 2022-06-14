@@ -1,4 +1,8 @@
-import { AppBar, IconButton, Toolbar } from "@mui/material";
+import {
+  AppBar,
+  IconButton,
+  Toolbar,
+} from "@mui/material";
 
 function Nav() {
   const menuItems = [
