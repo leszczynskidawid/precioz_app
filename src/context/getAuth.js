@@ -1,26 +1,37 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import {
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 
-const { createContext, useState, useContext } = require("react");
+const {
+  createContext,
+  useState,
+  useContext,
+} = require("react");
 
 const fakeAuth = () =>
-  new Promise(resolve => {
-    setTimeout(() => resolve("2342f2f1d131rf12"), 2500);
+  new Promise((resolve) => {
+    setTimeout(
+      () => resolve("2342f2f1d131rf12"),
+      2500,
+    );
   });
 
 const authContext = createContext(null);
 
 function ProviderAuthContext({ children }) {
-
   const [token, setToken] = useState(null);
-  const [isAlertOpen, setIsAlertOpen] = useState(false);
-  const [alertText, setAlertText] = useState('');
+  const [isAlertOpen, setIsAlertOpen] =
+    useState(false);
+  const [alertText, setAlertText] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
-
   const login = async () => {
     const token = await fakeAuth();
     setToken(token);
-    const origin = location.state?.from?.pathname || "/dashboard";
+    const origin =
+      location.state?.from?.pathname ||
+      "/dashboard";
     navigate(origin);
   };
 
@@ -29,13 +40,12 @@ function ProviderAuthContext({ children }) {
   };
 
   const toggleAlert = async (text) => {
-    setIsAlertOpen(true)
-    setAlertText(text)
+    setIsAlertOpen(true);
+    setAlertText(text);
     setTimeout(() => {
-    setIsAlertOpen(false)
-    setAlertText('')
-   }, 5000)
-
+      setIsAlertOpen(false);
+      setAlertText("");
+    }, 2000);
   };
 
   const value = {
@@ -47,9 +57,14 @@ function ProviderAuthContext({ children }) {
     toggleAlert,
   };
 
-  return <authContext.Provider value={value}>{children}</authContext.Provider>;
+  return (
+    <authContext.Provider value={value}>
+      {children}
+    </authContext.Provider>
+  );
 }
 export const useAuth = () => {
   return useContext(authContext);
 };
+
 export default ProviderAuthContext;

@@ -1,6 +1,6 @@
-export   const RouterPathTypes = {
-    dashboard: "dashboard",
-    admin: "admin",
-    home: "/",
-    noMatch: "*",
-  };
+export const RouterPathTypes = {
+  dashboard: "dashboard",
+  admin: "admin",
+  home: "/",
+  noMatch: "*",
+};
