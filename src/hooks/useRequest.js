@@ -29,6 +29,7 @@ export const useRequest = () => {
       ) {
         response = await apiClient[method](
           path,
+
           body,
           config !== "undefind" ? config : {},
         );
