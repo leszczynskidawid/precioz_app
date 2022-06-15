@@ -5,6 +5,7 @@ import InputForm from "components/atoms/Inputs/InputForm";
 import ButtonForm from "components/atoms/Buttons/ButtonForm";
 import SelectInputForm from "components/atoms/SelectInputs/SelectInputForm";
 import CheckBoxForm from "components/atoms/CheckBoxs/CheckBoxForm";
+import Nav from "components/atoms/Nav/Nav";
 const items = [
   { value: 121, label: "121" },
   { value: 32, label: "32" },
@@ -29,8 +30,9 @@ function VirtualComponentsDisigned() {
     resolver: yupResolver(schema),
   });
   const onSubmit = data => alert(JSON.stringify(data));
-  console.log(errors)
   return (
+    <>
+  <Nav/>
     <form onSubmit={handleSubmit(onSubmit)} style={{ padding: "50px" }}>
       <InputForm
         name="firstName"
@@ -61,6 +63,7 @@ function VirtualComponentsDisigned() {
         error={errors}
       ></CheckBoxForm>
     </form>
+    </>
   );
 }
 
