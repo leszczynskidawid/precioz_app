@@ -14,8 +14,7 @@ export const useRequest = () => {
   ) => {
     try {
       let response = null;
-      console.log("askjndlajhdalsjd");
-
+      console.log("Xd");
       if (
         method === ApiClientMethodTypes.get ||
         method === ApiClientMethodTypes.delete

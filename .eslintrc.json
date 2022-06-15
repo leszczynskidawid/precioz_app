@@ -4,7 +4,12 @@
     "es2021": true,
     "node": true
   },
-  "extends": ["react-app"],
+  "extends": [
+    "eslint-config-prettier",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "prettier"
+  ],
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -12,7 +17,12 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["react"],
+  "plugins": [
+    "eslint-plugin-prettier",
+    "react",
+    "jsx-a11y",
+    "import"
+  ],
   "rules": {
     "react/jsx-filename-extension": [
       1,
@@ -61,7 +71,6 @@
     ],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
-    "indent": "off",
-    "@typescript-eslint/indent": "off"
+    "indent": "off"
   }
 }

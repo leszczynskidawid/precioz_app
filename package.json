@@ -11,6 +11,7 @@
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
+    "eslint-config-prettier": "^8.5.0",
     "prop-types": "^15.8.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
@@ -26,8 +27,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix .",
+    "lint": "./node_modules/.bin/eslint '**/*.js'",
     "prepare": "husky install"
   },
   "eslintConfig": {
@@ -55,6 +55,8 @@
     "lint-staged": "^13.0.1"
   },
   "lint-staged": {
-    "*.{js,mjs,cjs}": "eslint --fix"
+    "**/*.{js,jsx,ts,tsx}": [
+      "npx prettier --write"
+    ]
   }
 }
