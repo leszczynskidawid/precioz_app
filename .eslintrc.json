@@ -27,7 +27,7 @@
     "react/jsx-filename-extension": [
       1,
       {
-        "extensions": [".js", "jsx", ".ts", "tsx"]
+        "extensions": [".js", "jsx"]
       }
     ],
     "react/function-component-definition": [
@@ -69,8 +69,6 @@
         "allow": ["warn", "error"]
       }
     ],
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
     "indent": "off"
   }
 }
