@@ -14,9 +14,18 @@ const items = [
 
 const schema = yup
   .object({
-    firstName: yup.string().required("wymagany").trim(),
-    select: yup.string().required("wymagany").trim(),
-    checkbox:  yup.string().required("wymagany").trim(),
+    firstName: yup
+      .string()
+      .required("wymagany")
+      .trim(),
+    select: yup
+      .string()
+      .required("wymagany")
+      .trim(),
+    checkbox: yup
+      .string()
+      .required("wymagany")
+      .trim(),
   })
   .required();
 
@@ -29,40 +38,46 @@ function VirtualComponentsDisigned() {
     defaultValeus: { firstName: "asd" },
     resolver: yupResolver(schema),
   });
-  const onSubmit = data => alert(JSON.stringify(data));
+  const onSubmit = (data) =>
+    alert(JSON.stringify(data));
   return (
     <>
-  <Nav/>
-    <form onSubmit={handleSubmit(onSubmit)} style={{ padding: "50px" }}>
-      <InputForm
-        name="firstName"
-        label="name"
-        variant="outlined"
-        size="small"
-        error={errors}
-        control={control}
-      />
+      <Nav />
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        style={{ padding: "50px" }}
+      >
+        <InputForm
+          name="firstName"
+          label="name"
+          variant="outlined"
+          size="small"
+          error={errors}
+          control={control}
+        />
 
-      {/* buttons */}
-      <h2>buttons</h2>
-      <ButtonForm type="submit">button</ButtonForm>
+        {/* buttons */}
+        <h2>buttons</h2>
+        <ButtonForm type="submit">
+          button
+        </ButtonForm>
 
-      <h2>Select</h2>
-      <SelectInputForm
-        control={control}
-        name="select"
-        items={items}
-        error={errors}
-      />
+        <h2>Select</h2>
+        <SelectInputForm
+          control={control}
+          name="select"
+          items={items}
+          error={errors}
+        />
 
-      <h2>checkbox</h2>
-      <CheckBoxForm
-        control={control}
-        name="checkbox"
-        label="alkshd"
-        error={errors}
-      ></CheckBoxForm>
-    </form>
+        <h2>checkbox</h2>
+        <CheckBoxForm
+          control={control}
+          name="checkbox"
+          label="alkshd"
+          error={errors}
+        ></CheckBoxForm>
+      </form>
     </>
   );
 }

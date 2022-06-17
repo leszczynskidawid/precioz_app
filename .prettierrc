@@ -1,5 +1,6 @@
 {
   "trailingComma": "all",
   "tabWidth": 2,
-  "printWidth": 50
+  "printWidth": 50,
+  "endOfLine": "auto"
 }

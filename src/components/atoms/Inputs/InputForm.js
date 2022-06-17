@@ -1,6 +1,14 @@
 import { TextField } from "@mui/material";
 import { Controller } from "react-hook-form";
-function InputForm({ name, label, variant, size, error, control }) {
+function InputForm({
+  name,
+  label,
+  variant,
+  size,
+  error,
+  control,
+  type,
+}) {
   return (
     <Controller
       control={control}
@@ -11,6 +19,7 @@ function InputForm({ name, label, variant, size, error, control }) {
           variant={variant}
           label={label}
           size={size}
+          type={type}
           helperText={error[name]?.message}
           error={error[name]?.message}
         />

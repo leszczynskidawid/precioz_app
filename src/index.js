@@ -7,7 +7,9 @@ import { BrowserRouter } from "react-router-dom";
 import { StyledEngineProvider } from "@mui/material";
 import ProviderAuthContext from "context/getAuth";
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(
+  document.getElementById("root"),
+);
 root.render(
   <BrowserRouter>
     <StyledEngineProvider injectFirst>
@@ -17,7 +19,7 @@ root.render(
         </ProviderAuthContext>
       </React.StrictMode>
     </StyledEngineProvider>
-  </BrowserRouter>
+  </BrowserRouter>,
 );
 
 // If you want to start measuring performance in your app, pass a function
