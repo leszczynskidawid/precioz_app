@@ -1,45 +1,46 @@
 import { Paper } from "@mui/material";
 import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
+import { StyledTable } from "./style";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
 
-export const DataTable = ({ rows }) => {
+export const DataTable = ({ rows, object }) => {
+  const handleonClick = (row) => {
+    console.log(row);
+  };
   return (
-    <TableContainer component={Paper}>
+    <StyledTable component={Paper}>
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>{}</TableCell>
+            {Object.values(object)?.map(
+              (value) => (
+                <TableCell key={value}>
+                  {value}
+                </TableCell>
+              ),
+            )}
           </TableRow>
         </TableHead>
         <TableBody>
           {rows?.map((row) => (
             <TableRow
               key={row}
-              onClick={(row) => console.log(row)}
+              onClick={() => handleonClick}
             >
-              <TableCell>
-                {row.operationNumber}
-              </TableCell>
-              <TableCell>
-                {row.machineName}
-              </TableCell>
-              <TableCell>
-                {row.machineNumber}
-              </TableCell>
-              <TableCell>
-                {row.workTimeInMilliseconds}
-              </TableCell>
-              <TableCell>
-                {row.tpzTimeInMilliseconds}
-              </TableCell>
+              {Object.values(row)?.map(
+                (value) => (
+                  <TableCell key={value}>
+                    {value}
+                  </TableCell>
+                ),
+              )}
             </TableRow>
           ))}
         </TableBody>
       </Table>
-    </TableContainer>
+    </StyledTable>
   );
 };

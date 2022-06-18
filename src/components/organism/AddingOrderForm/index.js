@@ -4,6 +4,7 @@ import { StyledForm } from "./styled";
 import ButtonForm from "components/atoms/Buttons/ButtonForm";
 import { ModalWindowForm } from "components/molecules/ModalWindowForm";
 import { DataTable } from "components/atoms/DataTable";
+import { titleCellDataTableOperations } from "constants/TitleCellDataTableColumnTyps";
 
 // function createData(
 //   operationNumber,
@@ -37,28 +38,25 @@ import { DataTable } from "components/atoms/DataTable";
 
 const data = [
   {
-    id: "1",
+    operationNumber: "00020",
+    machineName: "Hyundai400Mc",
+    machineNumber: "00232",
     workTimeInMilliseconds: 1200,
     tpzTimeInMilliseconds: 3122,
-    operationNumber: "00020",
-    machineNumber: "00232",
-    machineName: "Hyundai400Mc",
   },
   {
-    id: "2",
+    operationNumber: "00020",
+    machineName: "Hyundai400Mc",
+    machineNumber: "00232",
     workTimeInMilliseconds: 1200,
     tpzTimeInMilliseconds: 3122,
-    operationNumber: "00020",
-    machineNumber: "00232",
-    machineName: "Hyundai400Mc",
   },
   {
-    id: "3",
+    operationNumber: "00020",
+    machineName: "Hyundai400Mc",
+    machineNumber: "00232",
     workTimeInMilliseconds: 1200,
     tpzTimeInMilliseconds: 3122,
-    operationNumber: "00020",
-    machineNumber: "00232",
-    machineName: "Hyundai400Mc",
   },
 ];
 
@@ -69,6 +67,8 @@ export const AddingOrderForm = () => {
     control,
     formState: { errors },
   } = useForm();
+
+  console.log(data["operationNumber"]);
 
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
@@ -109,7 +109,10 @@ export const AddingOrderForm = () => {
         </ButtonForm>
       </div>
 
-      <DataTable rows={data}></DataTable>
+      <DataTable
+        rows={data}
+        object={titleCellDataTableOperations}
+      ></DataTable>
     </StyledForm>
   );
 };
