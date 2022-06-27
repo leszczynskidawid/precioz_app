@@ -2,33 +2,15 @@ import ButtonForm from "./atoms/Buttons/ButtonForm";
 import VirtualComponentsDisigned from "assets/VirtualComponetsDisigned";
 import Dashboard from "assets/HelperWorkerFolderWithRoutesComponent/Deashboard";
 import NoMatch from "assets/HelperWorkerFolderWithRoutesComponent/NoMach";
-import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "context/getAuth";
 import ProtectedRoute from "components/atoms/ProtectedRoute/ProtectedRoute";
 import Admin from "assets/HelperWorkerFolderWithRoutesComponent/Admin";
 import { RouterPathTypes } from "constants/RouterPathTypes";
-import { useRequest } from "hooks/useRequest";
-import { ApiClientMethodTypes } from "constants/ApiClientMehodTypes";
 import { Alert } from "./atoms/Alert";
 
 function App() {
-  const [users, setUsers] = useState([]);
-  const { callApiRequest } = useRequest();
-
-  useEffect(() => {
-    (async function getUsers() {
-      const res = await callApiRequest(
-        ApiClientMethodTypes.get,
-      );
-
-      if (res) {
-        setUsers(res.results);
-      }
-    })();
-  }, []);
-
   return (
     <div className="App">
       <Navigation />
@@ -44,25 +26,11 @@ function App() {
           element={<VirtualComponentsDisigned />}
         />
         <Route element={<ProtectedRoute />}>
-          <Route
-            path={RouterPathTypes.dashboard}
-            element={<Dashboard />}
-          />
-          <Route
-            path={RouterPathTypes.admin}
-            element={<Admin />}
-          />
+          <Route path={RouterPathTypes.dashboard} element={<Dashboard />} />
+          <Route path={RouterPathTypes.admin} element={<Admin />} />
         </Route>
-        <Route
-          path={RouterPathTypes.noMatch}
-          element={<NoMatch />}
-        />
+        <Route path={RouterPathTypes.noMatch} element={<NoMatch />} />
       </Routes>
-      <div>
-        {users?.map((user) => (
-          <div key={user}>{user.email}</div>
-        ))}
-      </div>
 
       <Alert />
     </div>
@@ -82,24 +50,14 @@ const Navigation = () => {
         background: "whitesmoke",
       }}
     >
-      <NavLink to={RouterPathTypes.home}>
-        Home
-      </NavLink>
-      <NavLink to={RouterPathTypes.dashboard}>
-        Dashboard
-      </NavLink>
-      <NavLink to={RouterPathTypes.admin}>
-        Admin
-      </NavLink>
+      <NavLink to={RouterPathTypes.home}>Home</NavLink>
+      <NavLink to={RouterPathTypes.dashboard}>Dashboard</NavLink>
+      <NavLink to={RouterPathTypes.admin}>Admin</NavLink>
 
       {token ? (
-        <ButtonForm onClick={() => logout()}>
-          Logout
-        </ButtonForm>
+        <ButtonForm onClick={() => logout()}>Logout</ButtonForm>
       ) : (
-        <ButtonForm onClick={() => login()}>
-          Login
-        </ButtonForm>
+        <ButtonForm onClick={() => login()}>Login</ButtonForm>
       )}
     </nav>
   );

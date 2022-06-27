@@ -6,6 +6,13 @@ import ButtonForm from "components/atoms/Buttons/ButtonForm";
 import SelectInputForm from "components/atoms/SelectInputs/SelectInputForm";
 import CheckBoxForm from "components/atoms/CheckBoxs/CheckBoxForm";
 import Nav from "components/atoms/Nav/Nav";
+
+import { ButtonIcon } from "components/ButtonIcon";
+import { icon } from "./Icons/Icons";
+import { useAuth } from "context/getAuth";
+import { ModalWindowForm } from "components/molecules/ModalWindowForm";
+import { Alert } from "@mui/material";
+
 const items = [
   { value: 121, label: "121" },
   { value: 32, label: "32" },
@@ -14,18 +21,9 @@ const items = [
 
 const schema = yup
   .object({
-    firstName: yup
-      .string()
-      .required("wymagany")
-      .trim(),
-    select: yup
-      .string()
-      .required("wymagany")
-      .trim(),
-    checkbox: yup
-      .string()
-      .required("wymagany")
-      .trim(),
+    firstName: yup.string().required("wymagany").trim(),
+    select: yup.string().required("wymagany").trim(),
+    checkbox: yup.string().required("wymagany").trim(),
   })
   .required();
 
@@ -38,15 +36,14 @@ function VirtualComponentsDisigned() {
     defaultValeus: { firstName: "asd" },
     resolver: yupResolver(schema),
   });
-  const onSubmit = (data) =>
-    alert(JSON.stringify(data));
+  const onSubmit = (data) => alert(JSON.stringify(data));
+
+  const { handleModalOpen, isModalOpen, toggleAlert } = useAuth();
+
   return (
     <>
       <Nav />
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        style={{ padding: "50px" }}
-      >
+      <form onSubmit={handleSubmit(onSubmit)} style={{ padding: "50px" }}>
         <InputForm
           name="firstName"
           label="name"
@@ -58,9 +55,7 @@ function VirtualComponentsDisigned() {
 
         {/* buttons */}
         <h2>buttons</h2>
-        <ButtonForm type="submit">
-          button
-        </ButtonForm>
+        <ButtonForm type="error">button</ButtonForm>
 
         <h2>Select</h2>
         <SelectInputForm
@@ -77,6 +72,20 @@ function VirtualComponentsDisigned() {
           label="alkshd"
           error={errors}
         ></CheckBoxForm>
+
+        <ButtonIcon icon={icon.iconClose}></ButtonIcon>
+
+        <button type="button" onClick={() => handleModalOpen()}>
+          open
+        </button>
+        <ModalWindowForm open={isModalOpen} />
+
+        <button onClick={() => toggleAlert("succes")}>open alert</button>
+
+        <Alert open={true} security="succes">
+          as
+        </Alert>
+        <Alert variant="succes">{}</Alert>
       </form>
     </>
   );

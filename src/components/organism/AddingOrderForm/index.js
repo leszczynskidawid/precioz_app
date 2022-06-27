@@ -5,114 +5,118 @@ import ButtonForm from "components/atoms/Buttons/ButtonForm";
 import { ModalWindowForm } from "components/molecules/ModalWindowForm";
 import { DataTable } from "components/atoms/DataTable";
 import { titleCellDataTableOperations } from "constants/TitleCellDataTableColumnTyps";
+import { useAuth } from "context/getAuth";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { useDataTableOredersContext } from "context/dataTableOrdersContext";
 
-// function createData(
-//   operationNumber,
-//   machineName,
-//   machineNumber,
-//   workTimeInMilliseconds,
-//   tpzTimeInMilliseconds,
-// ) {
-//   return {
-//     operationNumber,
-//     machineName,
-//     machineNumber,
-//     workTimeInMilliseconds,
-//     tpzTimeInMilliseconds,
-//   };
-// }
+import { useNavigate } from "react-router-dom";
+import { RouterPathTypes } from "constants/RouterPathTypes";
+import { Container } from "@mui/system";
 
-// const rows = [
-//   createData(
-//     "0010",
-//     "Hyundai400",
-//     "00325",
-//     200,
-//     40,
-//   ),
-//   createData("0020", 237, 9.0, 37, 4.3),
-//   createData("0030", 262, 16.0, 24, 6.0),
-//   createData("0040", 305, 3.7, 67, 4.3),
-//   createData("0050", 356, 16.0, 49, 3.9),
-// ];
+const digitsOnly = (value) => /^\d+$/.test(value);
 
-const data = [
-  {
-    operationNumber: "00020",
-    machineName: "Hyundai400Mc",
-    machineNumber: "00232",
-    workTimeInMilliseconds: 1200,
-    tpzTimeInMilliseconds: 3122,
-  },
-  {
-    operationNumber: "00020",
-    machineName: "Hyundai400Mc",
-    machineNumber: "00232",
-    workTimeInMilliseconds: 1200,
-    tpzTimeInMilliseconds: 3122,
-  },
-  {
-    operationNumber: "00020",
-    machineName: "Hyundai400Mc",
-    machineNumber: "00232",
-    workTimeInMilliseconds: 1200,
-    tpzTimeInMilliseconds: 3122,
-  },
-];
+const schema = yup
+  .object({
+    serialId: yup
+      .string()
+      .test(
+        "dignitsOnly",
+        "numer zlecenia przyjmuje wyłącznie ciag liczbowy ",
+        digitsOnly,
+      ),
+    metalName: yup
+      .string()
+      .required()
+      .matches(
+        /^[A-Z]+[a-z]+/,
+        "podaj prwidłowa nazwe detalu, nazwa nie może zawierać znaków specjanych oraz cyfr",
+      )
+      .min(3)
+      .max(15),
+    metalQuantity: yup.number().max(1200).min(1).required(),
+  })
+  .required();
 
 export const AddingOrderForm = () => {
   const {
-    onSubmit,
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+  const naviagte = useNavigate();
 
-  console.log(data["operationNumber"]);
+  const { handleModalOpen, isModalOpen } = useAuth();
+  const { operationsOrder, handleDeleteRowfromDataTable } =
+    useDataTableOredersContext();
+
+  const onSubmit = () => {
+    if (errors !== null && operationsOrder.length > 0) {
+      alert("dodano");
+      naviagte(RouterPathTypes.home);
+    }
+  };
 
   return (
-    <StyledForm onSubmit={handleSubmit(onSubmit)}>
-      <h1>Dodaj zlecenie</h1>
-      <InputForm
-        name={"serialId"}
-        control={control}
-        label={"numer zlecenia"}
-        error={errors}
-        size="small"
-        type="sting"
-      />
-      <InputForm
-        name={"metalQuantity"}
-        control={control}
-        label={"liczba sztuk"}
-        error={errors}
-        size="small"
-        type="number"
-      />
-      <div
-        style={{
-          display: "flex",
-          padding: "20px 0",
-          justifyContent: "space-between",
-        }}
-      >
-        <h3>operacje</h3>
-        <ButtonForm
-          size="small"
-          variant="contained"
-          onClick={() => (
-            <ModalWindowForm open={true} />
-          )}
-        >
-          {" "}
-          dodaj operacje
-        </ButtonForm>
-      </div>
+    <div>
+      <StyledForm onSubmit={handleSubmit(onSubmit)}>
+        <h1>DODAJ ZlECENIE</h1>
 
-      <DataTable
-        rows={data}
-        object={titleCellDataTableOperations}
-      ></DataTable>
-    </StyledForm>
+        <Container style={{ display: "flex", flexDirection: "column" }}>
+          <InputForm
+            name={"serialId"}
+            control={control}
+            label={"numer zlecenia"}
+            error={errors}
+            size="small"
+            type="string"
+          />{" "}
+          <InputForm
+            name={"metalName"}
+            control={control}
+            label={"Nazwa detalu"}
+            error={errors}
+            size="small"
+            type="string"
+          />
+          <InputForm
+            name={"metalQuantity"}
+            control={control}
+            label={"liczba sztuk"}
+            error={errors}
+            size="small"
+            type="number"
+          />
+        </Container>
+        <div
+          style={{
+            display: "flex",
+            padding: "20px 0",
+            justifyContent: "space-between",
+          }}
+        >
+          <h3>operacje</h3>
+          <ButtonForm size="small" onClick={() => handleModalOpen()}>
+            dodaj operacje
+          </ButtonForm>
+        </div>
+        <DataTable
+          heders={titleCellDataTableOperations}
+          data={operationsOrder}
+          deleteRow={handleDeleteRowfromDataTable}
+        />
+        <ButtonForm
+          type="submit"
+          variant="contained"
+          size="large"
+          disabled={operationsOrder.length !== 0 ? false : true}
+        >
+          Dodaj zlecenie
+        </ButtonForm>
+      </StyledForm>
+      <ModalWindowForm open={isModalOpen}></ModalWindowForm>
+    </div>
   );
 };

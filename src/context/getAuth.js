@@ -1,44 +1,34 @@
-import {
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const {
-  createContext,
-  useState,
-  useContext,
-} = require("react");
+const { createContext, useState, useContext } = require("react");
 
 const fakeAuth = () =>
   new Promise((resolve) => {
-    setTimeout(
-      () => resolve("2342f2f1d131rf12"),
-      2500,
-    );
+    setTimeout(() => resolve("2342f2f1d131rf12"), 2500);
   });
 
 const authContext = createContext(null);
 
 function ProviderAuthContext({ children }) {
   const [token, setToken] = useState(null);
-  const [isAlertOpen, setIsAlertOpen] =
-    useState(false);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [alertText, setAlertText] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  //function onSubmit dla dodania zlecenia
+
   const login = async () => {
     const token = await fakeAuth();
     setToken(token);
-    const origin =
-      location.state?.from?.pathname ||
-      "/dashboard";
+    const origin = location.state?.from?.pathname || "/dashboard";
     navigate(origin);
   };
 
   const logout = () => {
     setToken(null);
   };
-
   const toggleAlert = async (text) => {
     setIsAlertOpen(true);
     setAlertText(text);
@@ -48,6 +38,14 @@ function ProviderAuthContext({ children }) {
     }, 2000);
   };
 
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
   const value = {
     login,
     logout,
@@ -55,13 +53,12 @@ function ProviderAuthContext({ children }) {
     alertText,
     isAlertOpen,
     toggleAlert,
+    handleModalClose,
+    handleModalOpen,
+    isModalOpen,
   };
 
-  return (
-    <authContext.Provider value={value}>
-      {children}
-    </authContext.Provider>
-  );
+  return <authContext.Provider value={value}>{children}</authContext.Provider>;
 }
 export const useAuth = () => {
   return useContext(authContext);
