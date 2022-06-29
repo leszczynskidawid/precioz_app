@@ -5,19 +5,35 @@ const DataTableOrdersContext = createContext(null);
 function ProviderDataTableOrdersContext({ children }) {
   const [operationsOrder, setOperationsOrder] = useState([]);
   const [dataRowformDataTable, setDataRowformDataTable] = useState({});
+  const [errors, setErros] = useState(false);
 
-  const addOperationOrder = (operation) => {
-    let array = [];
-    array.push(operation);
-    setOperationsOrder((prevState) => [...prevState, operation]);
+  const addOperationOrder = async (operation) => {
+    const newOrders = [...operationsOrder, operation];
+
+    const validation = operationsOrder.findIndex(
+      (item) => item.operationNumber === operation.operationNumber,
+    );
+    if (validation === -1) {
+      setOperationsOrder(newOrders);
+    } else {
+      setErros(true);
+    }
   };
 
-  const handleRowfromDataTable = (row) => {
-    setDataRowformDataTable(row);
+  const handleEditRowWithOrderfromTableOrders = (row, callback) => {
+    callback;
+    const editRows = [...operationsOrder];
+    const index = operationsOrder.findIndex(
+      (operation) => operation.operationNumber === row.operationNumber,
+    );
+    editRows[index] = row;
+    console.log(editRows[index]);
+    setDataRowformDataTable(editRows[index]);
+    setOperationsOrder(editRows);
   };
 
   const handleDeleteRowfromDataTable = (row) => {
-    if (confirm("czy napeno chzioc")) {
+    if (confirm("czy napeno checsz usunać ")) {
       setOperationsOrder((operation) =>
         operation.filter((item) => {
           return item.operationNumber !== row.operationNumber;
@@ -25,22 +41,15 @@ function ProviderDataTableOrdersContext({ children }) {
       );
     }
   };
-  const handleEditRowInModal = (row, callback) => {
-    const data = operationsOrder.filter(
-      (operation) => operation.operationNumber === row.operationNumber,
-    );
-    setDataRowformDataTable(data);
-
-    callback();
-  };
 
   const value = {
-    handleRowfromDataTable,
+    handleEditRowWithOrderfromTableOrders,
     dataRowformDataTable,
     operationsOrder,
     addOperationOrder,
     handleDeleteRowfromDataTable,
-    handleEditRowInModal,
+    setErros,
+    errors,
   };
 
   return (

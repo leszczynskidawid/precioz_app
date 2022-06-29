@@ -9,8 +9,7 @@ import Nav from "components/atoms/Nav/Nav";
 
 import { ButtonIcon } from "components/ButtonIcon";
 import { icon } from "./Icons/Icons";
-import { useAuth } from "context/getAuth";
-import { ModalWindowForm } from "components/molecules/ModalWindowForm";
+
 import { Alert } from "@mui/material";
 
 const items = [
@@ -37,8 +36,6 @@ function VirtualComponentsDisigned() {
     resolver: yupResolver(schema),
   });
   const onSubmit = (data) => alert(JSON.stringify(data));
-
-  const { handleModalOpen, isModalOpen, toggleAlert } = useAuth();
 
   return (
     <>
@@ -75,17 +72,9 @@ function VirtualComponentsDisigned() {
 
         <ButtonIcon icon={icon.iconClose}></ButtonIcon>
 
-        <button type="button" onClick={() => handleModalOpen()}>
-          open
-        </button>
-        <ModalWindowForm open={isModalOpen} />
-
-        <button onClick={() => toggleAlert("succes")}>open alert</button>
-
         <Alert open={true} security="succes">
           as
         </Alert>
-        <Alert variant="succes">{}</Alert>
       </form>
     </>
   );

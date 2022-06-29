@@ -9,10 +9,12 @@ import { useAuth } from "context/getAuth";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useDataTableOredersContext } from "context/dataTableOrdersContext";
-
 import { useNavigate } from "react-router-dom";
 import { RouterPathTypes } from "constants/RouterPathTypes";
-import { Container } from "@mui/system";
+import { ModalWindowTypes } from "constants/ModalWidowTypes";
+import { Alert } from "components/atoms/Alert";
+import { AlertTypes } from "constants/AlertTypes";
+import { StyledHeaderTableContainer, StyledContainer } from "./styled";
 
 const digitsOnly = (value) => /^\d+$/.test(value);
 
@@ -40,6 +42,7 @@ const schema = yup
 
 export const AddingOrderForm = () => {
   const {
+    reset,
     handleSubmit,
     control,
     formState: { errors },
@@ -48,14 +51,17 @@ export const AddingOrderForm = () => {
   });
   const naviagte = useNavigate();
 
-  const { handleModalOpen, isModalOpen } = useAuth();
-  const { operationsOrder, handleDeleteRowfromDataTable } =
-    useDataTableOredersContext();
+  const { handleModalOpen, isModalOpen, isAlertOpen, toggleAlert } = useAuth();
+  const {
+    operationsOrder,
+    handleDeleteRowfromDataTable,
+    handleEditRowWithOrderfromTableOrders,
+  } = useDataTableOredersContext();
 
   const onSubmit = () => {
     if (errors !== null && operationsOrder.length > 0) {
-      alert("dodano");
-      naviagte(RouterPathTypes.home);
+      toggleAlert("dodano");
+      reset(), naviagte(RouterPathTypes.home);
     }
   };
 
@@ -64,7 +70,7 @@ export const AddingOrderForm = () => {
       <StyledForm onSubmit={handleSubmit(onSubmit)}>
         <h1>DODAJ ZlECENIE</h1>
 
-        <Container style={{ display: "flex", flexDirection: "column" }}>
+        <StyledContainer>
           <InputForm
             name={"serialId"}
             control={control}
@@ -89,23 +95,21 @@ export const AddingOrderForm = () => {
             size="small"
             type="number"
           />
-        </Container>
-        <div
-          style={{
-            display: "flex",
-            padding: "20px 0",
-            justifyContent: "space-between",
-          }}
-        >
+        </StyledContainer>
+        <StyledHeaderTableContainer>
           <h3>operacje</h3>
-          <ButtonForm size="small" onClick={() => handleModalOpen()}>
+          <ButtonForm
+            size="small"
+            onClick={() => handleModalOpen(ModalWindowTypes.add)}
+          >
             dodaj operacje
           </ButtonForm>
-        </div>
+        </StyledHeaderTableContainer>
         <DataTable
           heders={titleCellDataTableOperations}
           data={operationsOrder}
           deleteRow={handleDeleteRowfromDataTable}
+          editRow={handleEditRowWithOrderfromTableOrders}
         />
         <ButtonForm
           type="submit"
@@ -116,6 +120,8 @@ export const AddingOrderForm = () => {
           Dodaj zlecenie
         </ButtonForm>
       </StyledForm>
+      <Alert variant={AlertTypes.success} open={isAlertOpen} />
+
       <ModalWindowForm open={isModalOpen}></ModalWindowForm>
     </div>
   );

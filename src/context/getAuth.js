@@ -15,9 +15,7 @@ function ProviderAuthContext({ children }) {
   const [alertText, setAlertText] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  //function onSubmit dla dodania zlecenia
+  const [isModalOpen, setIsModalOpen] = useState({ open: false, type: "" });
 
   const login = async () => {
     const token = await fakeAuth();
@@ -38,8 +36,8 @@ function ProviderAuthContext({ children }) {
     }, 2000);
   };
 
-  const handleModalOpen = () => {
-    setIsModalOpen(true);
+  const handleModalOpen = (type) => {
+    setIsModalOpen({ open: true, type });
   };
 
   const handleModalClose = () => {
