@@ -11,8 +11,6 @@ import { useAuth } from "context/getAuth";
 import { ModalWindowTypes } from "constants/ModalWidowTypes";
 
 export const DataTable = ({ data, heders, deleteRow, editRow }) => {
-  // const { handleEditRowWithOrderfromTableOrders } =
-  //   useDataTableOredersContext();
   const { handleModalOpen } = useAuth();
 
   const tableRows = data?.map((row) => (

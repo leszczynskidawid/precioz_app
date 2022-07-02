@@ -51,7 +51,7 @@ export const AddingOrderForm = () => {
   });
   const naviagte = useNavigate();
 
-  const { handleModalOpen, isModalOpen, isAlertOpen, toggleAlert } = useAuth();
+  const { handleModalOpen, isAlertOpen, toggleAlert } = useAuth();
   const {
     operationsOrder,
     handleDeleteRowfromDataTable,
@@ -122,7 +122,7 @@ export const AddingOrderForm = () => {
       </StyledForm>
       <Alert variant={AlertTypes.success} open={isAlertOpen} />
 
-      <ModalWindowForm open={isModalOpen}></ModalWindowForm>
+      <ModalWindowForm />
     </div>
   );
 };

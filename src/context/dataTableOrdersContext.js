@@ -7,7 +7,7 @@ function ProviderDataTableOrdersContext({ children }) {
   const [dataRowformDataTable, setDataRowformDataTable] = useState({});
   const [errors, setErros] = useState(false);
 
-  const addOperationOrder = async (operation) => {
+  const addOperationOrder = (operation) => {
     const newOrders = [...operationsOrder, operation];
 
     const validation = operationsOrder.findIndex(
@@ -27,7 +27,6 @@ function ProviderDataTableOrdersContext({ children }) {
       (operation) => operation.operationNumber === row.operationNumber,
     );
     editRows[index] = row;
-    console.log(editRows[index]);
     setDataRowformDataTable(editRows[index]);
     setOperationsOrder(editRows);
   };
