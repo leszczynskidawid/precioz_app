@@ -7,25 +7,17 @@ import TableBody from "@mui/material/TableBody";
 import { Paper } from "@mui/material";
 import { icon } from "assets/Icons/Icons";
 import { ButtonIcon } from "components/ButtonIcon";
-import { useAuth } from "context/getAuth";
-import { ModalWindowTypes } from "constants/ModalWidowTypes";
 
 export const DataTable = ({ data, heders, deleteRow, editRow }) => {
-  // const { handleEditRowWithOrderfromTableOrders } =
-  //   useDataTableOredersContext();
-  const { handleModalOpen } = useAuth();
-
-  const tableRows = data?.map((row) => (
-    <TableRow key={row}>
-      {Object.values(row)?.map((value) => (
-        <TableCell key={value}>{value}</TableCell>
+  const tableRows = data?.map((row, index) => (
+    <TableRow key={index}>
+      {Object.values(row)?.map((value, index) => (
+        <TableCell key={index}>{value}</TableCell>
       ))}
+
       <TableCell>
         <ButtonIcon icon={icon.iconDelete} onClick={() => deleteRow(row)} />
-        <ButtonIcon
-          icon={icon.iconEdit}
-          onClick={() => editRow(row, handleModalOpen(ModalWindowTypes.edit))}
-        />
+        <ButtonIcon icon={icon.iconEdit} onClick={() => editRow(row)} />
       </TableCell>
     </TableRow>
   ));

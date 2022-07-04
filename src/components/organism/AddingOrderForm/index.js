@@ -15,8 +15,9 @@ import { ModalWindowTypes } from "constants/ModalWidowTypes";
 import { Alert } from "components/atoms/Alert";
 import { AlertTypes } from "constants/AlertTypes";
 import { StyledHeaderTableContainer, StyledContainer } from "./styled";
+import { RegexTypes } from "constants/RegexTypes";
 
-const digitsOnly = (value) => /^\d+$/.test(value);
+const digitsOnly = (value) => RegexTypes.dignitsOnly.test(value);
 
 const schema = yup
   .object({
@@ -31,7 +32,7 @@ const schema = yup
       .string()
       .required()
       .matches(
-        /^[A-Z]+[a-z]+/,
+        RegexTypes.onlyCharacterisCorrrect,
         "podaj prwidłowa nazwe detalu, nazwa nie może zawierać znaków specjanych oraz cyfr",
       )
       .min(3)
@@ -52,11 +53,8 @@ export const AddingOrderForm = () => {
   const naviagte = useNavigate();
 
   const { handleModalOpen, isModalOpen, isAlertOpen, toggleAlert } = useAuth();
-  const {
-    operationsOrder,
-    handleDeleteRowfromDataTable,
-    handleEditRowWithOrderfromTableOrders,
-  } = useDataTableOredersContext();
+  const { operationsOrder, handleDeleteRowfromDataTable } =
+    useDataTableOredersContext();
 
   const onSubmit = () => {
     if (errors !== null && operationsOrder.length > 0) {
@@ -77,7 +75,7 @@ export const AddingOrderForm = () => {
             label={"numer zlecenia"}
             error={errors}
             size="small"
-            type="string"
+            type="text"
           />{" "}
           <InputForm
             name={"metalName"}
@@ -85,7 +83,7 @@ export const AddingOrderForm = () => {
             label={"Nazwa detalu"}
             error={errors}
             size="small"
-            type="string"
+            type="text"
           />
           <InputForm
             name={"metalQuantity"}
@@ -109,7 +107,7 @@ export const AddingOrderForm = () => {
           heders={titleCellDataTableOperations}
           data={operationsOrder}
           deleteRow={handleDeleteRowfromDataTable}
-          editRow={handleEditRowWithOrderfromTableOrders}
+          editRow={handleModalOpen}
         />
         <ButtonForm
           type="submit"

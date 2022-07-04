@@ -4,8 +4,8 @@ import ButtonForm from "components/atoms/Buttons/ButtonForm";
 import { useAuth } from "context/getAuth";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-
 import { StyledForm } from "../AddingOrderForm/styled";
+import { RegexTypes } from "constants/RegexTypes";
 const schema = yup
 
   .object()
@@ -16,7 +16,7 @@ const schema = yup
       .min(5, "minimum 5 znakow")
       .max(5, "max 15 znakopw")
       .matches(
-        /^[a-zA-Z0-9@]+$/,
+        RegexTypes.noSpecialCharactersAndWhiteSpace,
         "This field cannot contain white space and special character",
       ),
     machineName: yup
@@ -35,7 +35,7 @@ const schema = yup
   })
   .required();
 
-export const FormAddOrder = ({ defaultValues, action, buttonName }) => {
+export const FormAddOrder = ({ defaultValues, crudAction, buttonName }) => {
   const { handleModalClose } = useAuth();
 
   const {
@@ -49,7 +49,7 @@ export const FormAddOrder = ({ defaultValues, action, buttonName }) => {
   });
 
   const onSubmit = (data) => {
-    action(data);
+    crudAction(data);
     reset();
     handleModalClose();
   };
@@ -62,7 +62,7 @@ export const FormAddOrder = ({ defaultValues, action, buttonName }) => {
         label={"numer operacji"}
         error={errors}
         size="small"
-        type="string"
+        type="text"
       />
       <InputForm
         name={"machineName"}
@@ -70,7 +70,7 @@ export const FormAddOrder = ({ defaultValues, action, buttonName }) => {
         label={"nazwa maszyny"}
         error={errors}
         size="small"
-        type="string"
+        type="text"
       />
       <InputForm
         name={"machineNumber"}
@@ -78,7 +78,7 @@ export const FormAddOrder = ({ defaultValues, action, buttonName }) => {
         label={"numer maszyny "}
         error={errors}
         size="small"
-        type="string"
+        type="text"
       />
       <InputForm
         name={"workTimeInMilliseconds"}

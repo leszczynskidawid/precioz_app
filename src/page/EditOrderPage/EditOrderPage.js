@@ -4,20 +4,28 @@ import { useDataTableOredersContext } from "context/dataTableOrdersContext";
 export const EditOrderPage = () => {
   const { handleEditRowWithOrderfromTableOrders, dataRowformDataTable } =
     useDataTableOredersContext();
-  let defaults = {
-    operationNumber: dataRowformDataTable?.operationNumber,
-    machineName: dataRowformDataTable?.machineName,
-    machineNumber: dataRowformDataTable?.machineNumber,
-    workTimeInMilliseconds: dataRowformDataTable?.workTimeInMilliseconds,
-    tpzTimeInMilliseconds: dataRowformDataTable?.tpzTimeInMilliseconds,
+  const {
+    operationNumber,
+    machineName,
+    machineNumber,
+    workTimeInMilliseconds,
+    tpzTimeInMilliseconds,
+  } = dataRowformDataTable;
+
+  let defaultValueInput = {
+    operationNumber: operationNumber,
+    machineName: machineName,
+    machineNumber: machineNumber,
+    workTimeInMilliseconds: workTimeInMilliseconds,
+    tpzTimeInMilliseconds: tpzTimeInMilliseconds,
   };
 
   return (
     <div>
       <h1>edytuj operacje</h1>
       <FormAddOrder
-        action={handleEditRowWithOrderfromTableOrders}
-        defaultValues={defaults}
+        crudAction={handleEditRowWithOrderfromTableOrders}
+        defaultValues={defaultValueInput}
         buttonName={"edytuj"}
       />
       ;

@@ -6,9 +6,9 @@ import { ModalWindowTypes } from "constants/ModalWidowTypes";
 import { EditOrderPage } from "page/EditOrderPage/EditOrderPage";
 
 export const ModalWindowForm = () => {
-  const { isModalOpen, handleModalClose } = useAuth();
+  const { isModalOpenAndType, handleModalClose } = useAuth();
 
-  const { open, type } = isModalOpen;
+  const { open, type } = isModalOpenAndType;
 
   return (
     <StyledModal open={open} onClose={handleModalClose}>

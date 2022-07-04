@@ -7,7 +7,7 @@ export const AddOrderPage = () => {
   return (
     <div>
       <h1>dodaj operacje</h1>
-      <FormAddOrder action={addOperationOrder} buttonName="dodaj" />
+      <FormAddOrder crudAction={addOperationOrder} buttonName="dodaj" />
     </div>
   );
 };

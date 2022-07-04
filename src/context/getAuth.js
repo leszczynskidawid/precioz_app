@@ -1,3 +1,4 @@
+import { AlertTypes } from "constants/AlertTypes";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const { createContext, useState, useContext } = require("react");
@@ -15,7 +16,10 @@ function ProviderAuthContext({ children }) {
   const [alertText, setAlertText] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
-  const [isModalOpen, setIsModalOpen] = useState({ open: false, type: "" });
+  const [isModalOpenAndType, setIsModalOpenandType] = useState({
+    open: false,
+    type: AlertTypes.success,
+  });
 
   const login = async () => {
     const token = await fakeAuth();
@@ -37,11 +41,11 @@ function ProviderAuthContext({ children }) {
   };
 
   const handleModalOpen = (type) => {
-    setIsModalOpen({ open: true, type });
+    setIsModalOpenandType({ open: true, type });
   };
 
   const handleModalClose = () => {
-    setIsModalOpen(false);
+    setIsModalOpenandType(false);
   };
 
   const value = {
@@ -53,7 +57,7 @@ function ProviderAuthContext({ children }) {
     toggleAlert,
     handleModalClose,
     handleModalOpen,
-    isModalOpen,
+    isModalOpenAndType,
   };
 
   return <authContext.Provider value={value}>{children}</authContext.Provider>;

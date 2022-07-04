@@ -1,5 +1,4 @@
 const { createContext, useState, useContext } = require("react");
-
 const DataTableOrdersContext = createContext(null);
 
 function ProviderDataTableOrdersContext({ children }) {
@@ -9,7 +8,6 @@ function ProviderDataTableOrdersContext({ children }) {
 
   const addOperationOrder = async (operation) => {
     const newOrders = [...operationsOrder, operation];
-
     const validation = operationsOrder.findIndex(
       (item) => item.operationNumber === operation.operationNumber,
     );
@@ -20,14 +18,12 @@ function ProviderDataTableOrdersContext({ children }) {
     }
   };
 
-  const handleEditRowWithOrderfromTableOrders = (row, callback) => {
-    callback;
+  const handleEditRowWithOrderfromTableOrders = (row) => {
     const editRows = [...operationsOrder];
     const index = operationsOrder.findIndex(
       (operation) => operation.operationNumber === row.operationNumber,
     );
     editRows[index] = row;
-    console.log(editRows[index]);
     setDataRowformDataTable(editRows[index]);
     setOperationsOrder(editRows);
   };
