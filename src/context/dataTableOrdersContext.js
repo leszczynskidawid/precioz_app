@@ -1,11 +1,13 @@
-const { createContext, useState, useContext } = require("react");
+import { useConfirmationDialog } from "hooks/useConfirmDialog";
 
+const { createContext, useState, useContext } = require("react");
 const DataTableOrdersContext = createContext(null);
 
 function ProviderDataTableOrdersContext({ children }) {
   const [operationsOrder, setOperationsOrder] = useState([]);
   const [dataRowformDataTable, setDataRowformDataTable] = useState({});
   const [errors, setErros] = useState(false);
+  const { getConfirmation } = useConfirmationDialog();
 
   const addOperationOrder = (operation) => {
     const newOrders = [...operationsOrder, operation];
@@ -31,8 +33,17 @@ function ProviderDataTableOrdersContext({ children }) {
     setOperationsOrder(editRows);
   };
 
-  const handleDeleteRowfromDataTable = (row) => {
-    if (confirm("czy napeno checsz usunać ")) {
+  const handleDeleteRowfromDataTable = async (row) => {
+    const itemName = operationsOrder.filter(
+      (item) => item.operationNumber === row.operationNumber,
+    );
+
+    const confirm = await getConfirmation({
+      title: "Uwaga",
+      message: `czy na pewno chcesz usunać operacje Nr: ${itemName[0].operationNumber}`,
+    });
+
+    if (confirm) {
       setOperationsOrder((operation) =>
         operation.filter((item) => {
           return item.operationNumber !== row.operationNumber;

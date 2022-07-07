@@ -7,17 +7,20 @@ import { BrowserRouter } from "react-router-dom";
 import { StyledEngineProvider } from "@mui/material";
 import ProviderAuthContext from "context/getAuth";
 import ProviderDataTableOrdersContext from "context/dataTableOrdersContext";
+import ConfirmationDialogProvider from "context/confirmDialogContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
     <StyledEngineProvider injectFirst>
       <React.StrictMode>
-        <ProviderAuthContext>
-          <ProviderDataTableOrdersContext>
-            <App />
-          </ProviderDataTableOrdersContext>
-        </ProviderAuthContext>
+        <ConfirmationDialogProvider>
+          <ProviderAuthContext>
+            <ProviderDataTableOrdersContext>
+              <App />
+            </ProviderDataTableOrdersContext>
+          </ProviderAuthContext>
+        </ConfirmationDialogProvider>
       </React.StrictMode>
     </StyledEngineProvider>
   </BrowserRouter>,

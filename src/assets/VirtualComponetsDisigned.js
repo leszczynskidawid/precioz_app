@@ -6,10 +6,8 @@ import ButtonForm from "components/atoms/Buttons/ButtonForm";
 import SelectInputForm from "components/atoms/SelectInputs/SelectInputForm";
 import CheckBoxForm from "components/atoms/CheckBoxs/CheckBoxForm";
 import Nav from "components/atoms/Nav/Nav";
-
 import { ButtonIcon } from "components/ButtonIcon";
 import { icon } from "./Icons/Icons";
-
 import { Alert } from "@mui/material";
 
 const items = [
