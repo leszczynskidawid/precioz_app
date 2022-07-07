@@ -3,15 +3,9 @@ import { apiClient } from "helpers/apiClient";
 import { useApiClientExceptionHandler } from "hooks/useApiClientExceptionHandler";
 
 export const useRequest = () => {
-  const { handleApiClientException } =
-    useApiClientExceptionHandler();
+  const { handleApiClientException } = useApiClientExceptionHandler();
 
-  const callApiRequest = async (
-    method,
-    path,
-    config,
-    body,
-  ) => {
+  const callApiRequest = async (method, path, config, body) => {
     try {
       let response = null;
       if (

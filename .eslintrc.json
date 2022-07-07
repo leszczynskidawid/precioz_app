@@ -30,13 +30,13 @@
         "extensions": [".js", "jsx"]
       }
     ],
-    "react/function-component-definition": [
-      2,
-      {
-        "namedComponents": "arrow-function",
-        "unnamedComponents": "arrow-function"
-      }
-    ],
+    // "react/function-component-definition": [
+    //   2,
+    //   {
+    //     "namedComponents": "arrow-function",
+    //     "unnamedComponents": "arrow-function"
+    //   }
+    // ],
     "prettier/prettier": "error",
     "max-len": "off",
     "react/prop-types": "off",
@@ -63,8 +63,9 @@
     "react/no-multi-comp": "off",
     "react/jsx-props-no-spreading": "off",
     "import/no-cycle": "off",
+    "react/react-in-jsx-scope": "off",
     "no-console": [
-      "error",
+      "off",
       {
         "allow": ["warn", "error"]
       }

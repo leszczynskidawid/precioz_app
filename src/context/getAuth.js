@@ -1,44 +1,36 @@
-import {
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { AlertTypes } from "constants/AlertTypes";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const {
-  createContext,
-  useState,
-  useContext,
-} = require("react");
+const { createContext, useState, useContext } = require("react");
 
 const fakeAuth = () =>
   new Promise((resolve) => {
-    setTimeout(
-      () => resolve("2342f2f1d131rf12"),
-      2500,
-    );
+    setTimeout(() => resolve("2342f2f1d131rf12"), 2500);
   });
 
 const authContext = createContext(null);
 
 function ProviderAuthContext({ children }) {
   const [token, setToken] = useState(null);
-  const [isAlertOpen, setIsAlertOpen] =
-    useState(false);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [alertText, setAlertText] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
+  const [isModalOpenAndType, setIsModalOpenandType] = useState({
+    open: false,
+    type: AlertTypes.success,
+  });
+
   const login = async () => {
     const token = await fakeAuth();
     setToken(token);
-    const origin =
-      location.state?.from?.pathname ||
-      "/dashboard";
+    const origin = location.state?.from?.pathname || "/dashboard";
     navigate(origin);
   };
 
   const logout = () => {
     setToken(null);
   };
-
   const toggleAlert = async (text) => {
     setIsAlertOpen(true);
     setAlertText(text);
@@ -48,6 +40,14 @@ function ProviderAuthContext({ children }) {
     }, 2000);
   };
 
+  const handleModalOpen = (type) => {
+    setIsModalOpenandType({ open: true, type });
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpenandType(false);
+  };
+
   const value = {
     login,
     logout,
@@ -55,13 +55,12 @@ function ProviderAuthContext({ children }) {
     alertText,
     isAlertOpen,
     toggleAlert,
+    handleModalClose,
+    handleModalOpen,
+    isModalOpenAndType,
   };
 
-  return (
-    <authContext.Provider value={value}>
-      {children}
-    </authContext.Provider>
-  );
+  return <authContext.Provider value={value}>{children}</authContext.Provider>;
 }
 export const useAuth = () => {
   return useContext(authContext);

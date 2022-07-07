@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { StyledEngineProvider } from "@mui/material";
 import ProviderAuthContext from "context/getAuth";
+import ProviderDataTableOrdersContext from "context/dataTableOrdersContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -13,11 +14,13 @@ root.render(
     <StyledEngineProvider injectFirst>
       <React.StrictMode>
         <ProviderAuthContext>
-          <App />
+          <ProviderDataTableOrdersContext>
+            <App />
+          </ProviderDataTableOrdersContext>
         </ProviderAuthContext>
       </React.StrictMode>
     </StyledEngineProvider>
-  </BrowserRouter>
+  </BrowserRouter>,
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -1,8 +1,7 @@
-function Admin() {
-    return (
-        
-        <h1>Admin Pagee</h1>
-     );
-}
+import { AddingOrderForm } from "components/organism/AddingOrderForm";
+
+const Admin = () => {
+  return <AddingOrderForm />;
+};
 
 export default Admin;
